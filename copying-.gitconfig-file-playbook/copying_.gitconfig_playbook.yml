@@ -1,0 +1,10 @@
+---
+
+#copying the .gitconfig file in my current dir to /home/$USER/ in my localservers stored in my ansible-inventory
+
+- name: COPYING .gitconfig
+  hosts: localserver
+  tasks:
+  - copy: 
+      src: .gitconfig
+      dest: /home/precious/

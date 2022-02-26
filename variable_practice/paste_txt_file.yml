@@ -1,0 +1,18 @@
+---
+- name: a list of variables
+#assigning play to all hostgroup
+  hosts: all
+#stating the variable 
+  vars:
+#assigning a path as a value to the variable we created "path_to_be_pasted"
+    path_to_be_pasted: /home/precious/Documents
+#stating task we want to do
+  tasks:
+#name of first task
+  - name: we are going to paste txt file to Documents    
+#we are performing a copy task with the copy module  
+    copy:
+      src: main.txt
+#we are assigning our variable as the path for our dest by calling "path_to_be_pasted" 
+      dest: '{{ path_to_be_pasted }}'
+

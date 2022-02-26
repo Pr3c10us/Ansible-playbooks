@@ -1,0 +1,28 @@
+---
+
+#this host is going to be node 1
+- hosts: precious@172.25.1.6
+#we state task for command module
+  tasks:
+  - command: hostnamectl set-hostname node-1
+#we are going to set become to yes so it runs as root     
+    become: yes
+
+
+#this host is going to be node 2
+- hosts: precious@172.25.1.10
+#we state task for command module
+  tasks:
+  - command: hostnamectl set-hostname node-2
+#we are going to set become to yes so it runs as root     
+    become: yes
+
+
+# this host is going to be node 3
+- hosts: precious@172.25.1.12
+#we state task for command module
+  tasks:
+  - command: hostnamectl set-hostname node-3
+#we are going to set become to yes so it runs as root     
+    become: yes     
+  

@@ -1,0 +1,28 @@
+---
+#assiging play to all hostgroup
+- hosts: all
+#state task to be run
+  tasks:
+#we are going to use the package module which is used for installations
+    - name: installing git
+      package:
+        name: git
+        state: latest
+#we are going to add a when condition so the task only run when the os is debian
+      when:
+        ansible_os_family: "Debian"
+#we are going to add the 'become' so it runs as root
+      become: yes
+    
+#we want to assign the git version to a variable 
+    - name: assigning the git version to a variable
+#we use the command module to run git -v which normally would output the git version on the server
+      command: git --version
+#we are going to assign the output to a variable "git_version" with the 'register' 
+      register: git_version
+    
+#we are print out the version
+    - name: outputing the git version
+#we use the debug module to show us the version and we add the .stdout_lines to the variable so we only get the output of the stdout_lines
+      debug:
+        var: git_version.stdout_lines

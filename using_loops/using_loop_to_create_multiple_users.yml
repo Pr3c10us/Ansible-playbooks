@@ -1,0 +1,12 @@
+---
+- name: New users are created
+  hosts: dbserver
+
+  tasks:
+    - name: 
+      user:
+#we need to include the item variable in the name arg in order for our loop arg to work
+        name: "{{ item }}"
+        state: present
+#we set our loop values to be equal to the db_user variable
+      loop: "{{ db_users }}"

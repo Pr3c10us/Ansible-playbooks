@@ -1,0 +1,33 @@
+---
+
+- name: User is going to be created
+#we are going to set our host to the hostgroup webserver
+  hosts: webserver
+  become: True
+#we are going to add a username variable so we can call it later in the file
+
+  tasks:
+
+  - name: Load variable from encrypted file
+#we use the include_vars module to add the variables from the file secretes
+    include_vars:
+      file: secret1
+
+#we are going to display the vaiable value from our encrypted secret1 file
+  - name: Displaying the encrypted data
+# we shall use the debug module
+    debug:
+      msg: "{{ secret1 }}" 
+    no_log: True   
+  
+  - name: User gets created
+#we would use the user module to manage the creation   
+    user:
+#we are going to call our username variable into the name argument of the user module
+      name: "{{ username['test']['uname']}}"
+#we are going to add a comment by calling the description variable into th comment arg of the user module
+      comment: "{{ username['test']['description'] }}"
+# we shall provide the password of the user by assigning the password variable in the webserver variables which is the secret1 variable
+      password: "{{ username['test']['password'] }}"
+      state: absent
+#we can also delete user by changing the sate from present to absent  

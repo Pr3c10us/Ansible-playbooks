@@ -1,0 +1,6 @@
+#this would hold variables for dbusers
+
+db_users: 
+  - test
+  - dev
+  - qa

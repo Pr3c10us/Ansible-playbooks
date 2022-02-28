@@ -1,0 +1,31 @@
+---
+
+- name: New users are created
+  hosts: all
+  vars:
+    web_users:
+      - member
+      - admin 
+      - developer
+  tasks:
+
+    - name: Create database users
+      user:
+#add item variable to iterate loop
+        name: "{{ item }}"
+        state: present
+#adding the variable db_users from our dbserver group_var
+      loop: "{{ db_users }}"
+#we are going to create a condition so this only runs on our dbserver and we would use the 'when' arg
+      when: "'dbserver' in group_names" 
+
+    - name: Create websever users
+      user:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ web_users }}"
+#we are going to create a condition so this only runs on our webserver and we would use the 'when' arg
+      when: "'webserver' in group_names"
+
+
+

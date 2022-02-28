@@ -1,0 +1,14 @@
+---
+
+- name: User is going to be created
+#we are going to set our host to the hostgroup webserver
+  hosts: webserver
+
+  tasks:
+  
+  - name: User gets created
+#we would use the user module to manage the creation   
+    user:
+      name: pr3c10us
+      state: present
+#we can also delete user by changing the sate from present to absent  

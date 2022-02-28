@@ -25,4 +25,5 @@
   - command: hostnamectl set-hostname node-3
 #we are going to set become to yes so it runs as root     
     become: yes     
-  
+
+

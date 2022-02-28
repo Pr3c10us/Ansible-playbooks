@@ -1,0 +1,41 @@
+---
+
+- name: Utilizing block, rescue, and always
+  hosts: all
+
+  tasks:
+
+    - name: Updating apache on webserver
+
+#we are going to place our update tasks for apache2 in our block
+      block:
+        - name: Display an update msg
+          debug:
+            msg: "Updating apache"
+
+        - name: Updating apache2 to latest
+          package:
+            name: apache2
+            state: latest
+      when: "'webserver' in group_names"
+#incase the block fails we would run some tasks in rescue to restart apache2
+      rescue:
+
+        - name: Displaying error msg that webserver will restart
+          debug:
+            msg: "Update failed. Restarting webservers to correct issues"
+
+        - name: Restarting the database if upgrade fail
+          service:
+            name: apache2
+            state: restarted
+
+#we want to reboot the system regardless the block fails or not so we use always block
+      always:
+
+        - name: Send out reboot message 
+          debug:
+            msg: "Rebooting server"
+
+        - name: Rebooting system
+          reboot:
